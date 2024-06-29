@@ -8,7 +8,7 @@ import AddTask from "./AddTask";
 export default function Content() {
   const [hasProject, setHasProject] = useState(false);
   const [projects, setProjects] = useState([]);
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProjectId, setSelectedProjectId] = useState(null);
   const [showDetails, setShowDetails] = useState();
 
   function handleFormSubmit(event, project) {
@@ -25,9 +25,7 @@ export default function Content() {
 
   function handleShowProject(projectId) {
     setShowDetails(true);
-    setSelectedProject(() => {
-      return projects.find((item) => item.id == projectId);
-    });
+    setSelectedProjectId(projectId);
   }
   //   console.log("selecetd");
   //   console.log(selectedProject);
@@ -38,7 +36,7 @@ export default function Content() {
   function handleDeletePro(id) {
     setProjects((prevPros) => {
       const updatedPros = prevPros.map((pro) => ({ ...pro }));
-      // setShowDetails(false);
+      setShowDetails(false);
       return updatedPros.filter((item) => item.id !== id);
     });
   }
@@ -84,15 +82,16 @@ export default function Content() {
     });
   }
 
-  useEffect(() => {
-    if (selectedProject) {
-      const updatedProject = projects.find(
-        (item) => item.id === selectedProject.id
-      );
-      console.log("Updating selected project:", updatedProject);
-      setSelectedProject(updatedProject);
-    }
-  }, [projects, selectedProject]);
+  //   useEffect(() => {
+  //     if (selectedProject) {
+  //       const updatedProject = projects.find(
+  //         (item) => item.id === selectedProject.id
+  //       );
+  //       console.log("Updating selected project:", updatedProject);
+  //       setSelectedProject(updatedProject);
+  //     }
+  //   }, [projects, selectedProject]);
+
   //   function handleDeleteTask(taskId, projectId) {
   //     setProjects((prevPros) => {
   //       // Create a deep copy of projects array
@@ -121,6 +120,10 @@ export default function Content() {
   //a consistent and predictable UI state in your React application.
   //   }
 
+  const selectedProject = projects.find(
+    (project) => project.id === selectedProjectId
+  );
+
   return (
     <div className="flex justify-start">
       <Navbar
@@ -129,7 +132,7 @@ export default function Content() {
         handleShowProject={handleShowProject}
       />
       {/* <ShowProject isProject={hasProject} /> */}
-      {showDetails && (
+      {showDetails && selectedProject && (
         <div className="w-full flex flex-col mt-24 pl-8 pr-36">
           <ProjectDetail
             showProject={selectedProject}
