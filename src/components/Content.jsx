@@ -13,27 +13,27 @@ export default function Content() {
     projects: [],
   });
 
-  // const [showDetails, setShowDetails] = useState();
-
   function handleStartAddProject() {
     setProjectsState((prevState) => {
       return { ...prevState, selectedProjectId: null };
     });
   }
 
-  // let updatedPros = prevPros.map((pro) => ({ ...pro }));
-  // let id = prevPros.length == 0 ? 0 : prevPros[0].id + 1;
-  // let newProject = { tasks: [], id: id, ...project };
-  // updatedPros.unshift(newProject);
-  // return updatedPros;
-
-  // function handleDeletePro(id) {
-  //   setProjects((prevPros) => {
-  //     const updatedPros = prevPros.map((pro) => ({ ...pro }));
-  //     setShowDetails(false);
-  //     return updatedPros.filter((item) => item.id !== id);
-  //   });
-  // }
+  function handleAddProject(projectData) {
+    setProjectsState((prevState) => {
+      const newProject = {
+        // let id = prevPros.length == 0 ? 0 : prevPros[0].id + 1;
+        // let newProject = { tasks: [], id: id, ...project };
+        // updatedPros.unshift(newProject);
+        ...projectData,
+        id: Math.random(),
+      };
+      return {
+        ...prevState,
+        projects: [...prevState.projects, newProject],
+      };
+    });
+  }
 
   // function handleAddTasks(task, projectId) {
   //   console.log(task);
@@ -118,10 +118,12 @@ export default function Content() {
   //   (project) => project.id === selectedProjectId
   // );
 
+  console.log(projectsState);
+
   let content;
   // === null wich means we want to add a new project
   if (projectsState.selectedProjectId === null) {
-    content = <NewProject />;
+    content = <NewProject onAdd={handleAddProject} />;
 
     // === undefined wich means we dont have any project
   } else if (projectsState.selectedProjectId === undefined) {
