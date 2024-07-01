@@ -1,14 +1,11 @@
-import { useState } from "react";
+import { useRef } from "react";
+
 import Input from "./Input";
 
-export default function AddProject({ onSubmit }) {
-  const [project, setProject] = useState({ title: "", desc: "", dueDate: "" });
-
-  function handleInputs(event, type) {
-    setProject((prevPro) => {
-      return { ...prevPro, [type]: event.target.value };
-    });
-  }
+export default function AddProject({}) {
+  const title = useRef();
+  const describtion = useRef();
+  const dueDate = useRef();
 
   return (
     <div className="w-[35rem] mt-16">
@@ -27,12 +24,10 @@ export default function AddProject({ onSubmit }) {
           </button>
         </li>
       </menu>
-      <div className="">
-        <Input label="Title" />
-
-        <Input label="Description" textarea />
-
-        <Input label="Due Date" />
+      <div>
+        <Input ref={title} label="Title" />
+        <Input ref={describtion} label="Description" textarea />
+        <Input ref={dueDate} label="Due Date" />
       </div>
     </div>
   );
