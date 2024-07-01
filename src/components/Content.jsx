@@ -6,81 +6,75 @@ import ProjectDetail from "./ProjectDetail";
 import AddTask from "./AddTask";
 
 export default function Content() {
-  const [hasProject, setHasProject] = useState(false);
-  const [projects, setProjects] = useState([]);
-  const [selectedProjectId, setSelectedProjectId] = useState(null);
-  const [showDetails, setShowDetails] = useState();
+  const [projectsState, setProjectsState] = useState({
+    //currentAction : 'adding'  =>'adding' , 'selected-project' , 'nothing-selected
+    // for controlling what's been displayed
+    selectedProjectId: undefined,
+    projects: [],
+  });
 
-  function handleFormSubmit(event, project) {
-    event.preventDefault();
+  // const [showDetails, setShowDetails] = useState();
 
-    setProjects((prevPros) => {
-      let updatedPros = prevPros.map((pro) => ({ ...pro }));
-      let id = prevPros.length == 0 ? 0 : prevPros[0].id + 1;
-      let newProject = { tasks: [], id: id, ...project };
-      updatedPros.unshift(newProject);
-      return updatedPros;
+  function handleStartAddProject() {
+    setProjectsState((prevState) => {
+      return { ...prevState, selectedProjectId: null };
     });
   }
 
-  function handleShowProject(projectId) {
-    setShowDetails(true);
-    setSelectedProjectId(projectId);
-  }
-  //   console.log("selecetd");
-  //   console.log(selectedProject);
-  function handleNewProject() {
-    setHasProject(true);
-  }
+  // let updatedPros = prevPros.map((pro) => ({ ...pro }));
+  // let id = prevPros.length == 0 ? 0 : prevPros[0].id + 1;
+  // let newProject = { tasks: [], id: id, ...project };
+  // updatedPros.unshift(newProject);
+  // return updatedPros;
 
-  function handleDeletePro(id) {
-    setProjects((prevPros) => {
-      const updatedPros = prevPros.map((pro) => ({ ...pro }));
-      setShowDetails(false);
-      return updatedPros.filter((item) => item.id !== id);
-    });
-  }
+  // function handleDeletePro(id) {
+  //   setProjects((prevPros) => {
+  //     const updatedPros = prevPros.map((pro) => ({ ...pro }));
+  //     setShowDetails(false);
+  //     return updatedPros.filter((item) => item.id !== id);
+  //   });
+  // }
 
-  function handleAddTasks(task, projectId) {
-    console.log(task);
-    setProjects((prevPros) => {
-      const updatedPros = prevPros.map((pro) => ({ ...pro }));
-      const selectedProject = prevPros.find((item) => item.id == projectId);
-      let id =
-        selectedProject.tasks.length == 0 ? 0 : selectedProject.tasks[0].id + 1;
-      const newTask = { id: id, task: task };
-      selectedProject.tasks.unshift(newTask);
-      updatedPros.map((pros) => {
-        if (pros.id == id) {
-          pros.tasks = selectedProject.tasks;
-        }
-      });
-      return updatedPros;
-    });
-  }
+  // function handleAddTasks(task, projectId) {
+  //   console.log(task);
+  //   setProjects((prevPros) => {
+  //     const updatedPros = prevPros.map((pro) => ({ ...pro }));
+  //     const selectedProject = prevPros.find((item) => item.id == projectId);
+  //     let id =
+  //       selectedProject.tasks.length == 0 ? 0 : selectedProject.tasks[0].id + 1;
+  //     const newTask = { id: id, task: task };
+  //     selectedProject.tasks.unshift(newTask);
+  //     updatedPros.map((pros) => {
+  //       if (pros.id == id) {
+  //         pros.tasks = selectedProject.tasks;
+  //       }
+  //     });
+  //     return updatedPros;
+  //   });
+  // }
 
-  function handleDeleteTask(taskId, projectId) {
-    console.log(
-      "Deleting task with ID:",
-      taskId,
-      "from project with ID:",
-      projectId
-    );
-    setProjects((prevPros) => {
-      const updatedPros = prevPros.map((project) => {
-        if (project.id === projectId) {
-          const updatedTasks = project.tasks.filter(
-            (task) => task.id !== taskId
-          );
-          console.log("Updated tasks for project:", projectId, updatedTasks);
-          return { ...project, tasks: updatedTasks };
-        }
-        return project;
-      });
-      console.log("Updated projects:", updatedPros);
-      return updatedPros;
-    });
-  }
+  // function handleDeleteTask(taskId, projectId) {
+  //   console.log(
+  //     "Deleting task with ID:",
+  //     taskId,
+  //     "from project with ID:",
+  //     projectId
+  //   );
+  //   setProjects((prevPros) => {
+  //     const updatedPros = prevPros.map((project) => {
+  //       if (project.id === projectId) {
+  //         const updatedTasks = project.tasks.filter(
+  //           (task) => task.id !== taskId
+  //         );
+  //         console.log("Updated tasks for project:", projectId, updatedTasks);
+  //         return { ...project, tasks: updatedTasks };
+  //       }
+  //       return project;
+  //     });
+  //     console.log("Updated projects:", updatedPros);
+  //     return updatedPros;
+  //   });
+  //}
 
   //   useEffect(() => {
   //     if (selectedProject) {
@@ -120,32 +114,24 @@ export default function Content() {
   //a consistent and predictable UI state in your React application.
   //   }
 
-  const selectedProject = projects.find(
-    (project) => project.id === selectedProjectId
-  );
+  // const selectedProject = projects.find(
+  //   (project) => project.id === selectedProjectId
+  // );
+
+  let content;
+  // === null wich means we want to add a new project
+  if (projectsState.selectedProjectId === null) {
+    content = <NewProject />;
+
+    // === undefined wich means we dont have any project
+  } else if (projectsState.selectedProjectId === undefined) {
+    content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
+  }
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <ProjectsSidebar
-        onClick={handleNewProject}
-        projects={projects}
-        handleShowProject={handleShowProject}
-      />
-      <NoProjectSelected />
-      {/* {showDetails && selectedProject && (
-        <div className="w-full flex flex-col mt-24 pl-8 pr-36">
-          <ProjectDetail
-            showProject={selectedProject}
-            handleDeletePro={handleDeletePro}
-          />
-          <AddTask
-            handleAddTasks={handleAddTasks}
-            project={selectedProject}
-            handleDeleteTask={handleDeleteTask}
-          />
-        </div>
-      )}
-      {!showDetails && <NewProject onSubmit={handleFormSubmit} />} */}
+      <ProjectsSidebar onStartAddProject={handleStartAddProject} />
+      {content}
     </main>
   );
 }
