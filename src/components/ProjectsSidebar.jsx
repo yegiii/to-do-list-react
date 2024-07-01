@@ -2,15 +2,18 @@ export default function Navbar({ onClick, projects, handleShowProject }) {
   //   console.log(projects);
 
   return (
-    <div className="rounded-tr-xl w-2/6 bg-slate-900 mt-8 h-screen px-10 pt-16">
-      <h2 className="uppercase text-white font-bold text-lg">your projects</h2>
-      <button
-        onClick={onClick}
-        className="rounded-lg bg-gray-600 text-gray-400 px-4 h-9 mt-8"
-      >
-        + Add Project
-      </button>
-
+    <aside className="w-1/3 px-8 py-16 bg-stone-900 text-stone-50 md:w-72 rounded-r-xl">
+      <h2 className="mb-8 font-bold uppercase md:text-xl text-stone-200">
+        your projects
+      </h2>
+      <div>
+        <button
+          onClick={onClick}
+          className="px-4 py-2 text-xs md:text-base rounded-md bg-stone-700 text-stone-400 hover:bg-stone-600 hover:text-stone-100"
+        >
+          + Add Project
+        </button>
+      </div>
       <ul className="mt-8 flex flex-col gap-2">
         {projects.map((project) => {
           return (
@@ -24,6 +27,6 @@ export default function Navbar({ onClick, projects, handleShowProject }) {
           );
         })}
       </ul>
-    </div>
+    </aside>
   );
 }

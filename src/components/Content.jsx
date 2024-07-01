@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import Navbar from "./Navbar";
+import { useState } from "react";
+import ProjectsSidebar from "./ProjectsSidebar";
 import ShowProject from "./ShowProject";
 import AddProject from "./AddProject";
 import ProjectDetail from "./ProjectDetail";
@@ -125,8 +125,8 @@ export default function Content() {
   );
 
   return (
-    <div className="flex justify-start">
-      <Navbar
+    <main className="h-screen my-8 flex gap-8">
+      <ProjectsSidebar
         onClick={handleNewProject}
         projects={projects}
         handleShowProject={handleShowProject}
@@ -146,6 +146,6 @@ export default function Content() {
         </div>
       )}
       {!showDetails && <AddProject onSubmit={handleFormSubmit} />}
-    </div>
+    </main>
   );
 }
