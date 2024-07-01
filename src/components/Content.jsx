@@ -21,15 +21,17 @@ export default function Content() {
 
   function handleAddProject(projectData) {
     setProjectsState((prevState) => {
+      const projectId = Math.random();
       const newProject = {
         // let id = prevPros.length == 0 ? 0 : prevPros[0].id + 1;
         // let newProject = { tasks: [], id: id, ...project };
         // updatedPros.unshift(newProject);
         ...projectData,
-        id: Math.random(),
+        id: projectId,
       };
       return {
         ...prevState,
+        selectedProjectId: undefined,
         projects: [...prevState.projects, newProject],
       };
     });
@@ -118,8 +120,6 @@ export default function Content() {
   //   (project) => project.id === selectedProjectId
   // );
 
-  console.log(projectsState);
-
   let content;
   // === null wich means we want to add a new project
   if (projectsState.selectedProjectId === null) {
@@ -132,7 +132,10 @@ export default function Content() {
 
   return (
     <main className="h-screen my-8 flex gap-8">
-      <ProjectsSidebar onStartAddProject={handleStartAddProject} />
+      <ProjectsSidebar
+        projects={projectsState.projects}
+        onStartAddProject={handleStartAddProject}
+      />
       {content}
     </main>
   );
