@@ -1,3 +1,5 @@
+import Button from "./Button";
+
 export default function Navbar({ onClick, projects, handleShowProject }) {
   //   console.log(projects);
 
@@ -7,12 +9,7 @@ export default function Navbar({ onClick, projects, handleShowProject }) {
         your projects
       </h2>
       <div>
-        <button
-          onClick={onClick}
-          className="px-4 py-2 text-xs md:text-base rounded-md bg-stone-700 text-stone-400 hover:bg-stone-600 hover:text-stone-100"
-        >
-          + Add Project
-        </button>
+        <Button>+ Add Project</Button>
       </div>
       <ul className="mt-8 flex flex-col gap-2">
         {projects.map((project) => {

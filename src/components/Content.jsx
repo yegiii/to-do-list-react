@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ProjectsSidebar from "./ProjectsSidebar";
-import ShowProject from "./ShowProject";
+import NoProjectSelected from "./NoProjectSelected";
 import NewProject from "./NewProject";
 import ProjectDetail from "./ProjectDetail";
 import AddTask from "./AddTask";
@@ -131,8 +131,8 @@ export default function Content() {
         projects={projects}
         handleShowProject={handleShowProject}
       />
-      {/* <ShowProject isProject={hasProject} /> */}
-      {showDetails && selectedProject && (
+      <NoProjectSelected />
+      {/* {showDetails && selectedProject && (
         <div className="w-full flex flex-col mt-24 pl-8 pr-36">
           <ProjectDetail
             showProject={selectedProject}
@@ -145,7 +145,7 @@ export default function Content() {
           />
         </div>
       )}
-      {!showDetails && <NewProject onSubmit={handleFormSubmit} />}
+      {!showDetails && <NewProject onSubmit={handleFormSubmit} />} */}
     </main>
   );
 }
