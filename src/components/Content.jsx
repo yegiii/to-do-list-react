@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ProjectsSidebar from "./ProjectsSidebar";
 import ShowProject from "./ShowProject";
-import AddProject from "./AddProject";
+import NewProject from "./NewProject";
 import ProjectDetail from "./ProjectDetail";
 import AddTask from "./AddTask";
 
@@ -145,7 +145,7 @@ export default function Content() {
           />
         </div>
       )}
-      {!showDetails && <AddProject onSubmit={handleFormSubmit} />}
+      {!showDetails && <NewProject onSubmit={handleFormSubmit} />}
     </main>
   );
 }
