@@ -56,6 +56,17 @@ export default function Content() {
     });
   }
 
+  function handeleDeleteProject() {
+    setProjectsState((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+        projects: prevState.projects.filter(
+          (project) => project.id !== prevState.selectedProjectId
+        ),
+      };
+    });
+  }
   //   function handleDeleteTask(taskId, projectId) {
   //     setProjects((prevPros) => {
   // Create a deep copy of projects array
@@ -92,7 +103,12 @@ export default function Content() {
     (project) => project.id === projectsState.selectedProjectId
   );
 
-  let content = <SelectedProject project={selectedProject} />;
+  let content = (
+    <SelectedProject
+      project={selectedProject}
+      onDelete={handeleDeleteProject}
+    />
+  );
   // === null wich means we want to add a new project
   if (projectsState.selectedProjectId === null) {
     content = (
