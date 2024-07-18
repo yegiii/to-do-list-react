@@ -130,13 +130,18 @@ export default function Content() {
     (project) => project.id === projectsState.selectedProjectId
   );
 
+  const selectedProjectTasks = projectsState.tasks.filter(
+    (task) => task.projectId === projectsState.selectedProjectId
+  );
+
+  console.log(selectedProjectTasks);
   let content = (
     <SelectedProject
       project={selectedProject}
       onDelete={handeleDeleteProject}
       onAddTask={handleAddTask}
       onDeleteTask={handleDeleteTask}
-      tasks={projectsState.tasks}
+      tasks={selectedProjectTasks}
     />
   );
   // === null wich means we want to add a new project
@@ -156,6 +161,7 @@ export default function Content() {
         projects={projectsState.projects}
         onStartAddProject={handleStartAddProject}
         onSelectProject={handleSelectProject}
+        selectedProjectId={projectsState.selectedProjectId}
       />
       {content}
     </main>
