@@ -29,7 +29,14 @@ export default function Content() {
     });
   }
 
-  function handleDeleteTask() {}
+  function handleDeleteTask(id) {
+    setProjectsState((prevState) => {
+      return {
+        ...prevState,
+        tasks: prevState.tasks.filter((task) => task.id !== id),
+      };
+    });
+  }
 
   // Means we dont have any project and we want to add one
   function handleStartAddProject() {
@@ -143,7 +150,6 @@ export default function Content() {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
 
-  console.log(projectsState.tasks);
   return (
     <main className="h-screen my-8 flex gap-8">
       <ProjectsSidebar
