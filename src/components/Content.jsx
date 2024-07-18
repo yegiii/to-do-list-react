@@ -39,6 +39,15 @@ export default function Content() {
     });
   }
 
+  function handelCancelAddProject() {
+    setProjectsState((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: undefined,
+      };
+    });
+  }
+
   //   function handleDeleteTask(taskId, projectId) {
   //     setProjects((prevPros) => {
   // Create a deep copy of projects array
@@ -74,7 +83,9 @@ export default function Content() {
   let content;
   // === null wich means we want to add a new project
   if (projectsState.selectedProjectId === null) {
-    content = <NewProject onAdd={handleAddProject} />;
+    content = (
+      <NewProject onAdd={handleAddProject} onCancel={handelCancelAddProject} />
+    );
 
     // === undefined wich means we dont have any project
   } else if (projectsState.selectedProjectId === undefined) {
