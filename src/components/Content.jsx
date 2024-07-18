@@ -10,7 +10,26 @@ export default function Content() {
     // for controlling what's been displayed
     selectedProjectId: undefined,
     projects: [],
+    tasks: [],
   });
+
+  function handleAddTask(text) {
+    setProjectsState((prevState) => {
+      const taskId = Math.random();
+      const newTask = {
+        text: text,
+        projectId: prevState.selectedProjectId,
+        id: taskId,
+      };
+
+      return {
+        ...prevState,
+        tasks: [newTask, ...prevState.tasks],
+      };
+    });
+  }
+
+  function handleDeleteTask() {}
 
   // Means we dont have any project and we want to add one
   function handleStartAddProject() {
@@ -67,6 +86,7 @@ export default function Content() {
       };
     });
   }
+
   //   function handleDeleteTask(taskId, projectId) {
   //     setProjects((prevPros) => {
   // Create a deep copy of projects array
@@ -107,6 +127,9 @@ export default function Content() {
     <SelectedProject
       project={selectedProject}
       onDelete={handeleDeleteProject}
+      onAddTask={handleAddTask}
+      onDeleteTask={handleDeleteTask}
+      tasks={projectsState.tasks}
     />
   );
   // === null wich means we want to add a new project
@@ -120,6 +143,7 @@ export default function Content() {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
 
+  console.log(projectsState.tasks);
   return (
     <main className="h-screen my-8 flex gap-8">
       <ProjectsSidebar

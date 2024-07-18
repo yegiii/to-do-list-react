@@ -1,9 +1,19 @@
-export default function SelectedProject({ project, onDelete }) {
+import Tasks from "./Tasks";
+
+export default function SelectedProject({
+  project,
+  onDelete,
+  onDeleteTask,
+  onAddTask,
+  tasks,
+}) {
   const formattedDate = new Date(project.dueDate).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
   });
+
+  //   console.log(tasks);
 
   return (
     <div className="w-[35rem] mt-16">
@@ -22,7 +32,7 @@ export default function SelectedProject({ project, onDelete }) {
           {project.describtion}
         </p>
       </header>
-      TASKS
+      <Tasks tasks={tasks} onAdd={onAddTask} onDelete={onDeleteTask} />
     </div>
   );
 }
