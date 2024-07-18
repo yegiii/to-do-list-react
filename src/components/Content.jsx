@@ -2,8 +2,7 @@ import { useState } from "react";
 import ProjectsSidebar from "./ProjectsSidebar";
 import NoProjectSelected from "./NoProjectSelected";
 import NewProject from "./NewProject";
-import ProjectDetail from "./ProjectDetail";
-import AddTask from "./AddTask";
+import SelectedProject from "./SelectedProject";
 
 export default function Content() {
   const [projectsState, setProjectsState] = useState({
@@ -48,6 +47,15 @@ export default function Content() {
     });
   }
 
+  function handleSelectProject(id) {
+    setProjectsState((prevState) => {
+      return {
+        ...prevState,
+        selectedProjectId: id,
+      };
+    });
+  }
+
   //   function handleDeleteTask(taskId, projectId) {
   //     setProjects((prevPros) => {
   // Create a deep copy of projects array
@@ -80,7 +88,11 @@ export default function Content() {
   //   (project) => project.id === selectedProjectId
   // );
 
-  let content;
+  const selectedProject = projectsState.projects.find(
+    (project) => project.id === projectsState.selectedProjectId
+  );
+
+  let content = <SelectedProject project={selectedProject} />;
   // === null wich means we want to add a new project
   if (projectsState.selectedProjectId === null) {
     content = (
@@ -97,6 +109,7 @@ export default function Content() {
       <ProjectsSidebar
         projects={projectsState.projects}
         onStartAddProject={handleStartAddProject}
+        onSelectProject={handleSelectProject}
       />
       {content}
     </main>
