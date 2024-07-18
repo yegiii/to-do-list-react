@@ -5,6 +5,7 @@ import Modal from "./Modal";
 
 export default function AddProject({ onAdd }) {
   const modal = useRef();
+
   const title = useRef();
   const describtion = useRef();
   const dueDate = useRef();
@@ -33,7 +34,7 @@ export default function AddProject({ onAdd }) {
   return (
     <>
       <Modal buttonCaption="Okay" ref={modal}>
-        <h2>Invalid Input</h2>
+        <h2 className="text-xl font-bold text-stone-500 my-4">Invalid Input</h2>
       </Modal>
       <div className="w-[35rem] mt-16">
         <menu className="flex items-center justify-end gap-4 my-4">
